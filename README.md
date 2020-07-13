@@ -1,4 +1,5 @@
-# s
+# Read Me Generator
+This project allows user inputs to easily generate a read me generator.
 # Table of Contents
 * Installations
 *Usage
@@ -8,15 +9,16 @@
 *Questions
 GitHub Information
 # Installations 
-s
+Axios, Inquirer
 # Usage 
-s
+Please open via node index.js in the console
 # Licenses
-s
+GitHub
 # Contributing
-s
+None
 # Tests
-s
+None
 # Questions
-s
+None
 # GitHub Information
+seyouny

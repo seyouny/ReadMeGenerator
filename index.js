@@ -93,7 +93,7 @@ prompt(questions).then(function(response){
   const question = response.question;
   const github = response.github;
 
-  console.log(imagegit,urlgit)
+  // console.log(imagegit,urlgit)
 
   const readMe = 
   
@@ -118,7 +118,7 @@ prompt(questions).then(function(response){
     '# Tests' + '\n' +
     test + '\n' +
     '# Questions' + '\n' + question + '\n' +
-    '# GitHub Information' + '\n' + urlgit}`
+    '# GitHub Information' + '\n' + github}`
 
 
 console.log(readMe)
