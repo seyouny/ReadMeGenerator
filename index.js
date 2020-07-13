@@ -1,6 +1,6 @@
 
-  const axios = require("axios");
-
+const axios = require("axios");
+// const gitGet = require("github.js");
 const questions = [
         {
               type: "input",
@@ -48,11 +48,41 @@ const questions = [
               name: "github"
             },
 ];
+
 var inquirer = require("inquirer");
+
+// inquirer
+//   .prompt({
+//     message: "Enter your GitHub username:",
+//     name: "username"
+//   })
+//   .then(function({ username }) {
+//     const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+
+//     axios.get(queryUrl).then(function(res) {
+//       // const repoNames = res.data.map(function(repo) {
+//       //   console.log(repoNames);
+//       // });
+//         imagegit = res.data[0].owner.avatar_url;
+//         urlgit = res.data[0].owner.url;
+//     })
+// })
 const { url } = require("inspector");
 var prompt = inquirer.createPromptModule();
 
 prompt(questions).then(function(response){
+
+  const queryUrl = 'https://api.github.com/users/'+response.github+'/repos?per_page=100';
+
+  axios.get(queryUrl).then(function(res) {
+    // const repoNames = res.data.map(function(repo) {
+    //   console.log(repoNames);
+    // });
+      var imagegit = res.data[0].owner.avatar_url;
+      var urlgit = res.data[0].owner.url;
+      console.log(imagegit, urlgit)
+  })
+
   const title = response.title;
   const des = response.projDes;
   const install = response.installation;
@@ -63,55 +93,41 @@ prompt(questions).then(function(response){
   const question = response.question;
   const github = response.github;
 
-
-
-      const queryUrl = 'https://api.github.com/users/'+github+'/repos?per_page=100';
-  var image = '';
-  var url = '';
-      axios.get(queryUrl).then(function(res) {
-        // const repoNames = res.data.map(function(repo) {
-        //   console.log(repoNames);
-        // });
-          image = res.data[0].owner.avatar_url;
-          url = res.data[0].owner.url;
-          return image, url;
-      })
-  
+  console.log(imagegit,urlgit)
 
   const readMe = 
   
-('# ' + title + '\n' +
+    `${'# ' + title + '\n' + des + '\n' +
 
-'# Table of Contents'+ '\n' +
-'* Installations'+ '\n' +
-'*Usage' + '\n' +
-'*Licenses'+ '\n' +
-'*Contributers'+ '\n' +
-'*Tests' + '\n' +
-'*Questions' + '\n' +
-'GitHub Information' + '\n' +
-'# Installations \n'+
-install + '\n'+
-'# Usage \n'+
-usage + '\n'+
-'# Licenses' + '\n'+
-license + '\n'+
-"# Contributing" + '\n'+
-contribute + '\n'+
-'# Tests' + '\n'+
-test + '\n'+
-'# Questions' + '\n'+ question + '\n' +
-'# GitHub Information'+ '\n'+ github) + '\n' +
-'![alt text]'+ image + '\n'
-'GitHub URL:' + url;
-// ${GitHub Email}';
+    '# Table of Contents' + '\n' +
+    '* Installations' + '\n' +
+    '*Usage' + '\n' +
+    '*Licenses' + '\n' +
+    '*Contributers' + '\n' +
+    '*Tests' + '\n' +
+    '*Questions' + '\n' +
+    'GitHub Information' + '\n' +
+    '# Installations \n' +
+    install + '\n' +
+    '# Usage \n' +
+    usage + '\n' +
+    '# Licenses' + '\n' +
+    license + '\n' +
+    "# Contributing" + '\n' +
+    contribute + '\n' +
+    '# Tests' + '\n' +
+    test + '\n' +
+    '# Questions' + '\n' + question + '\n' +
+    '# GitHub Information' + '\n' + urlgit}`
+
+
 console.log(readMe)
 
 var fs = require("fs");
 
 fs.writeFile("README.md",readMe,function(err){
 if (err){
-    console.log("oh")
+    console.log("Please try again.")
 }
 })
 })

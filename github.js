@@ -1,7 +1,7 @@
-const fs = require("fs");
 const axios = require("axios");
-const inquirer = require("inquirer");
-
+const { url } = require("inspector");
+var imagegit = '';
+var urlgit = '';
 inquirer
   .prompt({
     message: "Enter your GitHub username:",
@@ -14,7 +14,14 @@ inquirer
       // const repoNames = res.data.map(function(repo) {
       //   console.log(repoNames);
       // });
-        var image = res.data[0].owner.avatar_url;
-        var url = res.data[0].owner.url;
+        imagegit = res.data[0].owner.avatar_url;
+        urlgit = res.data[0].owner.url;
     })
 })
+
+exports.AXIOS = {
+  imageGit: imagegit,
+  urlGit: urlgit
+
+}
+
