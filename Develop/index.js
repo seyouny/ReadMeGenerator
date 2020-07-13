@@ -1,3 +1,6 @@
+
+  const axios = require("axios");
+
 const questions = [
         {
               type: "input",
@@ -46,12 +49,13 @@ const questions = [
             },
 ];
 var inquirer = require("inquirer");
+const { url } = require("inspector");
 var prompt = inquirer.createPromptModule();
 
 prompt(questions).then(function(response){
   const title = response.title;
   const des = response.projDes;
-  const install = response.install;
+  const install = response.installation;
   const usage = response.usage;
   const license = response.license;
   const contribute = response.contribute;
@@ -59,11 +63,33 @@ prompt(questions).then(function(response){
   const question = response.question;
   const github = response.github;
 
+
+
+      const queryUrl = 'https://api.github.com/users/'+github+'/repos?per_page=100';
+  var image = '';
+  var url = '';
+      axios.get(queryUrl).then(function(res) {
+        // const repoNames = res.data.map(function(repo) {
+        //   console.log(repoNames);
+        // });
+          image = res.data[0].owner.avatar_url;
+          url = res.data[0].owner.url;
+          return image, url;
+      })
+  
+
   const readMe = 
-('# ${title}' + title + '\n' +
+  
+('# ' + title + '\n' +
 
 '# Table of Contents'+ '\n' +
-// ${Table of Contents},
+'* Installations'+ '\n' +
+'*Usage' + '\n' +
+'*Licenses'+ '\n' +
+'*Contributers'+ '\n' +
+'*Tests' + '\n' +
+'*Questions' + '\n' +
+'GitHub Information' + '\n' +
 '# Installations \n'+
 install + '\n'+
 '# Usage \n'+
@@ -75,13 +101,15 @@ contribute + '\n'+
 '# Tests' + '\n'+
 test + '\n'+
 '# Questions' + '\n'+ question + '\n' +
-'# GitHub Information'+ '\n'+ github)
+'# GitHub Information'+ '\n'+ github) + '\n' +
+'![alt text]'+ image + '\n'
+'GitHub URL:' + url;
 // ${GitHub Email}';
 console.log(readMe)
 
 var fs = require("fs");
 
-fs.writeFile("README.mb",readMe,function(err){
+fs.writeFile("README.md",readMe,function(err){
 if (err){
     console.log("oh")
 }
